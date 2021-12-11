@@ -1,0 +1,151 @@
+---
+title: "Examen parcial"
+author: "Valeria Arango"
+date: "10/12/2021"
+output: github_document
+---
+# PARCIAL DE PROGRAMACIÓN
+
+### NOMBRE: Valeria Liz Arango Torres
+### Código:20160176 
+
+## PARTE 1
+
+### 1.Crear una función que permita calcula el ángulo entre las rectas L1 y L2 teniendo sus pendientes como parámetros. La función debe considerar si estas rectas no se cruzan.
+
+```{r} 
+ang_rectas <- function(m1 ="pendiente L1", m2 = "pendiente L2"){
+  vect1 <- atan((m2 - m1)/(1 + m1*m2))
+  return(vect1)
+}
+ang_rectas(1,1/2)
+```
+
+
+### 2.Crear una función que grafique un pol+igono ingresando un dataframe con sus coordenadas este y norte como parámetros. La función debe aceptar dataframes como unn máxima de 50 registros, realizar la prueba con las siguiente coordenadas.
+
+
+```{r} 
+
+vect2 <- c("A","B","C","D","E","F")
+pc_este <-c(272841.7,272893.6,272892.5,272913.8,272911.2,272837.5)
+pc_norte <-c(8666459.9,8666456.9,8666446.1,8666441.5,8666399.9,8666407.9)
+dataframe1 <-data.frame(vect2,pc_este,pc_norte)
+
+p_hexahedro <-function(df){
+  pc_E <-c(df[,"pc_este"],df[1,2])
+  pc_N <-c(df[,"pc_norte"],df[1,3])
+  return(plot(pc_E, pc_N,type="l"))
+}
+p_hexahedro(dataframe1)
+```
+
+
+## PARTE 2
+
+### 1.El data set de Kc_house_data tiene la información de ventas de viviendas entre mayo del 2014 y 2015 en el condado de King, estado de Washington, EE.UU. Esta base es empleada para ejercicios de regresión. La columna price tiene los precios de las viviendas y las demás son características de las casas en venta.
+
+```{r} 
+Kc_house<- read.csv("C:/Users/arang/Downloads/kc_house_data.csv")
+Kc_house
+```
+
+#### Realizar un análisis e interpretación de los datos de los precios de las casa. Se puede realizar gráficos y calcular estadísticos.
+
+##### a.cantidad de variables
+
+```{r} 
+length(Kc_house)
+```
+
+##### b.Cuantas viviendas hay
+
+```{r} 
+length(Kc_house$id)
+```
+
+##### c.Cual es la vivienda con mayor precio
+
+```{r} 
+Kc_house$id[match(max(Kc_house$price),Kc_house$price)]
+```
+
+#### d.Cuartos totales que hay
+
+```{r} 
+sum(Kc_house$bedrooms)
+```
+
+#### e.promedio de cuartos
+
+```{r} 
+mean(Kc_house$bedrooms)
+```
+
+
+#### Realizar un modelo de regresión para predecir cuál es la combinación de variables para predecir el precio.
+
+
+
+### 2.A partir del siguiente
+
+
+### 3.Leer el dataset de fritas dataset-fruits realizar lo siguiente.
+
+```{r} 
+ds_fruits <- read.csv("C:/Users/arang/Downloads/dataset-fruits.csv")
+ds_fruits
+```
+
+#### a.Eliminar _id
+
+```{r} 
+ds_fruits$ï.._id = NULL 
+head(ds_fruits)
+```
+
+#### b.Mostrar un resumen del data y epxlicar a grandes rasgos
+
+```{r} 
+summary(ds_fruits)
+```
+
+#### c.Determinar cuáles son los productos más importantes por cada país
+
+
+#### d. Realizar un gráfico que represente la cantidad de dolares que transacciona cada país
+
+
+#### e. realizar un gráfico que muestre las ganancias de las exportacions de Chile por producto
+
+```{r} 
+CHL <- ds_fruits[(ds_fruits$pais_origen=="Chile"),]
+x <-CHL$aÃ.o
+y <- CHL$totales
+plot(x, y, axes=TRUE, xlab="", ylab="ganancias")
+```
+
+### 4.Dado un vector de elementos, recorre cada uno y compra cada elemento con el siguiente, si el siguiente es menor intercambiamos las posiciones de los elementos en el vector, repetimos el mismo proceso varias veces en cada iteración "emerge" como una burbuja el siguiente elemento con mayor valor, al final de la primera iteración el menor de todos estará en la primera posición, en la siguiente colvemos a recorrer todo el vector excepto el primero y así de forma sucesiva.
+
+```{r} 
+normal<-sample(1:100,10)
+tras<- function(normal){
+  invert<-length(normal)
+  for(j in 1:(invert-1)){
+    for(i in 1:(invert-j)){
+      if(normal[i]>normal[i+1]){
+        itit<-normal[i]
+        normal[i]<-normal[i+1]
+        normal[i+1]<-itit
+      }
+    }
+  }
+  return(normal)
+}
+invertido<-tras(normal)
+normal
+invertido
+```
+
+
+
